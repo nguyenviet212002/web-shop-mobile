@@ -11,13 +11,12 @@ class App
         if (!empty($routes['default_controller'])) {
             $this->__controller = $routes['default_controller'];
         }
-
         $this->__action = 'index';
         $this->__params = [];
         $this->handelUrl();
     }
-
-    function getUrl()
+    
+    function getUrl() //lấy ra tên nhập trên url 
     {
         if (!empty($_SERVER[('PATH_INFO')])) {
             $url  = $_SERVER[('PATH_INFO')];
@@ -26,16 +25,16 @@ class App
         };
         return $url;
     }
-    function handelUrl()
+    function handelUrl() //xử lí các url và biến đổi để lấy ra các thư mục,controller và phương thức cần sử dụng
     {
-        $url = $this->getUrl();
-        $url = $this->__routes->handelRoute($url);
+        $url = $this->getUrl(); 
+        $url = $this->__routes->handelRoute($url); 
         $urlArr = array_filter(explode('/', $url));
-        $urlArr = array_values($urlArr);
-        $urlhandel = '';
-        if (!empty($urlArr)) {
+        $urlArr = array_values($urlArr); 
+        $urlhandel = ''; 
+        if (!empty($urlArr)) {  
             foreach ($urlArr as $key => $item) {
-                $urlhandel .= $item . '/';
+                $urlhandel .= $item . '/'; 
                 $fileCheck = rtrim($urlhandel, '/');
                 $fileArr = explode('/', $fileCheck);
                 $fileArr[count($fileArr) - 1] = ucfirst($fileArr[count($fileArr) - 1]);
@@ -67,7 +66,6 @@ class App
                     unset($urlArr[1]);
                 }
                 $this->__params = array_values($urlArr);
-
                 if (method_exists($this->__controller, $this->__action)) {
                     call_user_func_array([$this->__controller, $this->__action], $this->__params);
                 } else {

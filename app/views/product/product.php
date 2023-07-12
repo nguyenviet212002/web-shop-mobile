@@ -9,6 +9,7 @@
 </head>
 
 <body>
+    <?php echo _FOLDER_ROOT_ ?>
     <h1>Edit</h1>
     <form action="<?php  echo _FOLDER_ROOT_ .'/sua-doi/'?><?php echo $value['id']?>" method="post">
         <div>

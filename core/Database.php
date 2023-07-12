@@ -144,7 +144,6 @@ class Database extends ConnectDB
         $str_value = implode(',', $str_value);
         $insert = "INSERT INTO $table ($key) VALUES ($str_value)";
         $query = $this->_query($insert);
-        echo ('them du lieu thanh cong');
     }
 
     // tim kiem theo id
@@ -179,7 +178,6 @@ class Database extends ConnectDB
         $dataSetstring = (implode(',', $dataSet));
         $sql = "UPDATE $table SET $dataSetstring WHERE id = $id";
         $query = $this->_query($sql);
-        echo 'update thanh cong';
     }
 
     // xoa theo id
@@ -191,7 +189,6 @@ class Database extends ConnectDB
 
         $sql = "DELETE FROM $table WHERE $collum_id = $id";
         $query = $this->_query($sql);
-        echo 'xoa thanh cong';
     }
 
     // lay du lieu theo dieu kien
@@ -203,7 +200,6 @@ class Database extends ConnectDB
         // $data = du lieu so sanh (><=)(bat buoc)
 
         $sql = "SELECT * FROM $table WHERE $collum $operator '$data'";
-        var_dump($sql);
         $query = $this->_query($sql);
         $data = [];
         while ($row = mysqli_fetch_assoc($query)) {
@@ -228,8 +224,25 @@ class Database extends ConnectDB
         return $data;
     }
 
+    // public function join()
+    // {
+    //     // $table = ten bang (string)(batBuoc)  
+    //     // $collum = ten cot can so sanh (string)(bat buoc)
+    //     // $data = du lieu so sanh (><=)(bat buoc)
+    //     SELECT Orders.OrderID, Customers.CustomerName, Orders.OrderDate
+    //     FROM Orders
+    //     INNER JOIN Customers ON Orders.CustomerID=Customers.CustomerID;
+    //     $sql = "SELECT * FROM 'category' WHERE $collum LIKE '%$data%' ";
+    //     $query = $this->_query($sql);
+    //     $data = [];
+    //     while ($row = mysqli_fetch_assoc($query)) {
+    //         array_push($data, $row);
+    //     }
+    //     return $data;
+    // }
+
     // ket noi va query mysql
-    private function _query($sql)
+    public function _query($sql)
     {
         $conn = $this->connect();
         $query =  mysqli_query($conn, $sql);

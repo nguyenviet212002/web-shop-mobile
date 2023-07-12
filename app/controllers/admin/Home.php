@@ -9,6 +9,7 @@ class Home extends Controller
   }
   function index()
   {
+  
     $this->data['product_list'] = $this->model->getList();
     $view = $this->render('home/home', $this->data);
   }

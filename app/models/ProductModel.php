@@ -1,36 +1,30 @@
 <?php
 class ProductModel extends Database
 {
-
-    const TABLE = 'products';
-
-    public function getAll()
+    public function productDetails($id){
+        $sql = 'SELECT * FROM  products
+        INNER JOIN categorys ON products.category_id = categorys.category_id WHERE id = '.$id;
+        $query  = $this->_query($sql);
+        $data = [];
+        while ($row = mysqli_fetch_assoc($query)) {
+            array_push($data, $row);
+        }
+        return $data;
+    }
+    public function getTopseller()
     {
-        return $this->select(self::TABLE,['id','ten_san_pham','gia_san_pham']);
+        return $this->all('products');
     }
-    public function editSP($id)
-    {   
-        $table = self::TABLE;
-        return $this->find($table,'id',$id);
-    }
-    public function doEditSP($id,$data)
-    {   
-        $table = self::TABLE;
-        return $this->edit($table,$data,$id);
-    }
-    public function deleteSP($id)
-    {   
-        $table = self::TABLE;
-        return $this->delete($table,'id',$id);
-    }
-    // public function searchSP($data)
-    // {   
-    //     $table = self::TABLE;
-    //     return $this->whereLike($table,'gia_san_pham',$data);
-    // }
-    public function searchSP($data)
-    {   
-        $table = self::TABLE;
-        return $this->where($table,'gia_san_pham','>',$data);
+    public function getReview($id)
+    {
+        $sql = 'SELECT * FROM  reviews
+        INNER JOIN accounts ON reviews.account_id = accounts.account_id 
+        INNER JOIN products ON products.id = reviews.id WHERE products.id = '.$id;
+        $query  = $this->_query($sql);
+        $data = [];
+        while ($row = mysqli_fetch_assoc($query)) {
+            array_push($data, $row);
+        }
+        return $data;
     }
 }
